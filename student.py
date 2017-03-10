@@ -46,7 +46,7 @@ estimator = Pipeline([("imputer", Imputer(missing_values=0,
                                           strategy="median",
                                           axis=0)),
                       ("adaboost",
-                       AdaBoostRegressor())])
+                       AdaBoostRegressor(loss='linear', n_estimators=5000))])
 
 # tuning model hyper-parameters
 
