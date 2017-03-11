@@ -21,36 +21,40 @@ n_features = train_df.shape[1]
 x = train_df.iloc[:, :6]
 y = train_df.iloc[:, 6]
 
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
+train_df[train_df == 0] = np.nan
+train_df = train_df.drop(['g2', 'g4'], axis=1)
+
+# estimator = GradientBoostingRegressor(learning_rate=0.03, loss='lad', max_depth=100, n_estimators=1000)
 
 # pipeline
-# estimator = Pipeline([("imputer", Imputer(missing_values=0,
-#                                           strategy="median",
-#                                           axis=0)),
-#                       ("gradient_boosting",
-#                        GradientBoostingRegressor())])
+estimator = Pipeline([("imputer", Imputer(missing_values=np.nan,
+                                          strategy="median",
+                                          axis=0)),
+                      ("gradient_boosting",
+                       GradientBoostingRegressor(learning_rate=0.03, loss='lad', max_depth=100, n_estimators=1000))])
 
-# estimator = Pipeline([("imputer", Imputer(missing_values=0,
+# estimator = Pipeline([("imputer", Imputer(missing_values=np.nan,
 #                                           strategy="median",
 #                                           axis=0)),
 #                       ("lasso",
-#                        Lasso(fit_intercept=False, max_iter=1000, normalize=False, selection='random'))])
+#                        Lasso(fit_intercept=False, max_iter=500, normalize=False, selection='random'))])
 
-# estimator = Pipeline([("imputer", Imputer(missing_values=0,
+# estimator = Pipeline([("imputer", Imputer(missing_values=np.nan,
 #                                           strategy="median",
 #                                           axis=0)),
 #                       ("linear_regression",
 #                        LinearRegression())])
 
-estimator = Pipeline([("imputer", Imputer(missing_values=0,
-                                          strategy="median",
-                                          axis=0)),
-                      ("adaboost",
-                       AdaBoostRegressor(loss='linear', n_estimators=5000))])
+# estimator = Pipeline([("imputer", Imputer(missing_values=np.nan,
+#                                           strategy="median",
+#                                           axis=0)),
+#                       ("adaboost",
+#                        AdaBoostRegressor(loss='linear', n_estimators=5000))])
 
 # tuning model hyper-parameters
 
 # parameters = {
+#     'imputer__strategy': ('mean', 'median', 'most_frequent'),
 #     'gradient_boosting__loss': ('ls', 'lad', 'huber', 'quantile'),
 #     'gradient_boosting__learning_rate': (0.01, 0.03, 0.1, 0.3),
 #     'gradient_boosting__n_estimators': (10, 100, 1000),
@@ -98,3 +102,12 @@ scores = cross_val_score(estimator,
                          cv=kf,
                          scoring=make_scorer(mean_squared_error))
 print(np.sqrt(scores).mean())
+
+estimator.fit(x, y)
+
+test_df = pd.read_csv('datasets/students_grades/test.csv',
+                       names=['g0', 'g1', 'g2', 'g3', 'g4', 'g5'])
+y_pred = estimator.predict(test_df)
+y_pred = np.round(y_pred, 2)
+final_df = pd.concat([test_df, pd.DataFrame(y_pred)], axis=1)
+final_df.to_csv('datasets/students_grades/P1_submission.csv', index=False, header=None)
