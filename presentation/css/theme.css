@@ -1,0 +1,45 @@
+html {
+    --orange: #ffcc00
+}
+
+.orange {
+    color: var(--orange) !important;
+}
+
+.reveal {
+    background: url("../assets/texture.jpg");
+    position: relative;
+}
+
+.reveal::before {
+    background-color: rgba(5, 9, 11, 0.9);
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+}
+
+.reveal .slide-number {
+    font-size: 26px;
+    color: var(--orange);
+}
+
+.reveal .outline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+}
+
+.reveal .outline > .circle {
+    border-radius: 50%;
+    background-color: #eee;
+    color: black;
+    width: 80px;
+    height:80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+}
