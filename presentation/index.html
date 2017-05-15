@@ -28,13 +28,29 @@
 <div class="reveal">
     <div class="outline p-2 row">
         <div class="circle mx-2">siavash</div>
-        <img src="assets/right-arrow-with-turn.svg" width="80" height="80">
+        <div class="row justify-content-center align-items-center" style="width: 80px; height: 80px;">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 451.8 451.8">
+                <path d="M345.4 248.3L151.2 442.6c-12.4 12.4-32.4 12.4-44.7 0 -12.4-12.4-12.4-32.4 0-44.7L278.3 225.9 106.4 54c-12.4-12.4-12.4-32.4 0-44.7 12.4-12.4 32.4-12.4 44.8 0l194.3 194.3c6.2 6.2 9.3 14.3 9.3 22.4C354.7 234 351.6 242.1 345.4 248.3z"/>
+            </svg>
+        </div>
         <div class="circle mx-2">siavash</div>
-        <img src="assets/right-arrow-with-turn.svg" width="80" height="80">
+        <div class="row justify-content-center align-items-center" style="width: 80px; height: 80px;">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 451.8 451.8">
+                <path d="M345.4 248.3L151.2 442.6c-12.4 12.4-32.4 12.4-44.7 0 -12.4-12.4-12.4-32.4 0-44.7L278.3 225.9 106.4 54c-12.4-12.4-12.4-32.4 0-44.7 12.4-12.4 32.4-12.4 44.8 0l194.3 194.3c6.2 6.2 9.3 14.3 9.3 22.4C354.7 234 351.6 242.1 345.4 248.3z"/>
+            </svg>
+        </div>
         <div class="circle mx-2">siavash</div>
-        <img src="assets/right-arrow-with-turn.svg" width="80" height="80">
+        <div class="row justify-content-center align-items-center" style="width: 80px; height: 80px;">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 451.8 451.8">
+                <path d="M345.4 248.3L151.2 442.6c-12.4 12.4-32.4 12.4-44.7 0 -12.4-12.4-12.4-32.4 0-44.7L278.3 225.9 106.4 54c-12.4-12.4-12.4-32.4 0-44.7 12.4-12.4 32.4-12.4 44.8 0l194.3 194.3c6.2 6.2 9.3 14.3 9.3 22.4C354.7 234 351.6 242.1 345.4 248.3z"/>
+            </svg>
+        </div>
         <div class="circle mx-2">siavash</div>
-        <img src="assets/right-arrow-with-turn.svg" width="80" height="80">
+        <div class="row justify-content-center align-items-center" style="width: 80px; height: 80px;">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 451.8 451.8">
+                <path d="M345.4 248.3L151.2 442.6c-12.4 12.4-32.4 12.4-44.7 0 -12.4-12.4-12.4-32.4 0-44.7L278.3 225.9 106.4 54c-12.4-12.4-12.4-32.4 0-44.7 12.4-12.4 32.4-12.4 44.8 0l194.3 194.3c6.2 6.2 9.3 14.3 9.3 22.4C354.7 234 351.6 242.1 345.4 248.3z"/>
+            </svg>
+        </div>
         <div class="circle mx-2">siavash</div>
     </div>
     <div class="slides">
@@ -45,6 +61,10 @@
             <h3>Sadegh Mahmoudpour</h3>
         </section>
         <section>
+            <h2 class="orange">Outline</h2>
+        </section>
+        <section>
+            siavash
         </section>
     </div>
 </div>
@@ -68,6 +88,14 @@
             }
             }
         ]
+    });
+
+    Reveal.addEventListener('slidechanged', function (event) {
+        if (event.indexh !== 0 && event.indexh !== 1)
+            document.getElementsByClassName('outline')[0].style.display = 'flex';
+        else
+            document.getElementsByClassName('outline')[0].style.display = 'none';
+        // event.previousSlide, event.currentSlide, event.indexh, event.indexv
     });
 </script>
 </body>
