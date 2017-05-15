@@ -53,6 +53,7 @@
         </div>
         <div class="circle mx-2">siavash</div>
     </div>
+
     <div class="slides">
         <section>
             <h2 class="orange">Time Series Analysis</h2>
@@ -65,6 +66,13 @@
         </section>
         <section>
             siavash
+        </section>
+        <section>
+            <!--<canvas data-chart="line">-->
+                <!--Month, January, February, March, April, May, June, July-->
+                <!--My first dataset, 65, 59, 80, 81, 56, 55, 40-->
+                <!--My second dataset, 28, 48, 40, 19, 86, 27, 90-->
+            <!--</canvas>-->
         </section>
     </div>
 </div>
@@ -86,7 +94,9 @@
                 src: 'plugin/highlight/highlight.js', async: true, callback: function () {
                 hljs.initHighlightingOnLoad();
             }
-            }
+            },
+            {src: 'plugin/chart/Chart.min.js'},
+            {src: 'plugin/chart/csv2chart.js'},
         ]
     });
 
