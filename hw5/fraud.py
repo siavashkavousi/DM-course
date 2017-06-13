@@ -1,11 +1,9 @@
 import pandas as pd
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, precision_score, recall_score
 from sklearn.model_selection import StratifiedKFold, GridSearchCV
 from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.preprocessing import StandardScaler
 
 train_df = pd.read_csv('datasets/data_fraud/X_train.csv').sort_index(axis=1)
 label = pd.read_csv('datasets/data_fraud/Y_train.csv')
@@ -56,81 +54,86 @@ def describe(target_true, target_pred):
 
 X_train, X_test, y_train, y_test = train_test_split(train_df, label, test_size=0.3)
 
-print('Starting decision tree classifier grid search...')
-clf = DecisionTreeClassifier()
+scaler = StandardScaler()
+scaler.fit(X_train)
+X_train = scaler.transform(X_train)
+X_test = scaler.transform(X_test)
 
-parameter_grid = {
-    'max_depth': [10, 15, 20, 50, 100],
-    'max_features': ['auto', 'sqrt', 'log2', None],
-    'class_weight': [{0: 1., 1: 2}, {0: 1., 1: 4}, {0: 1., 1: 8}, 'balanced', None],
-    'criterion': ['gini', 'entropy'],
-    'splitter': ['best', 'random'],
-}
+# print('Starting decision tree classifier grid search...')
+# clf = DecisionTreeClassifier()
+#
+# parameter_grid = {
+#     'max_depth': [10, 15, 20, 50, 100],
+#     'max_features': ['auto', 'sqrt', 'log2', None],
+#     'class_weight': [{0: 1., 1: 2}, {0: 1., 1: 4}, {0: 1., 1: 8}, 'balanced', None],
+#     'criterion': ['gini', 'entropy'],
+#     'splitter': ['best', 'random'],
+# }
+#
+# cross_validation = StratifiedKFold(n_splits=5)
+#
+# grid_search = GridSearchCV(clf,
+#                            param_grid=parameter_grid,
+#                            cv=cross_validation,
+#                            scoring='f1',
+#                            n_jobs=-1,
+#                            verbose=1)
+#
+# grid_search.fit(train_df, label.values.ravel())
+#
+# print('Best score: {}'.format(grid_search.best_score_))
+# print('Best parameters: {}'.format(grid_search.best_params_))
 
-cross_validation = StratifiedKFold(n_splits=5)
+# print('Starting logistic regression classifier grid search...')
+# clf = LogisticRegression()
+#
+# parameter_grid = {
+#     'class_weight': [{0: 1., 1: 2}, {0: 1., 1: 4}, {0: 1., 1: 8}, 'balanced', None],
+#     'max_iter': [100, 200, 500, 800, 1000],
+#     'solver': ['newton-cg', 'lbfgs', 'liblinear', 'sag'],
+# }
+#
+# cross_validation = StratifiedKFold(n_splits=5)
+#
+# grid_search = GridSearchCV(clf,
+#                            param_grid=parameter_grid,
+#                            cv=cross_validation,
+#                            scoring='f1',
+#                            n_jobs=-1,
+#                            verbose=1)
+#
+# grid_search.fit(train_df, label.values.ravel())
+#
+# print('Best score: {}'.format(grid_search.best_score_))
+# print('Best parameters: {}'.format(grid_search.best_params_))
 
-grid_search = GridSearchCV(clf,
-                           param_grid=parameter_grid,
-                           cv=cross_validation,
-                           scoring='f1',
-                           n_jobs=-1,
-                           verbose=1)
-
-grid_search.fit(train_df, label.values.ravel())
-
-print('Best score: {}'.format(grid_search.best_score_))
-print('Best parameters: {}'.format(grid_search.best_params_))
-
-print('Starting logistic regression classifier grid search...')
-clf = LogisticRegression()
-
-parameter_grid = {
-    'class_weight': [{0: 1., 1: 2}, {0: 1., 1: 4}, {0: 1., 1: 8}, 'balanced', None],
-    'max_iter': [100, 200, 500, 800, 1000],
-    'solver': ['newton-cg', 'lbfgs', 'liblinear', 'sag'],
-}
-
-cross_validation = StratifiedKFold(n_splits=5)
-
-grid_search = GridSearchCV(clf,
-                           param_grid=parameter_grid,
-                           cv=cross_validation,
-                           scoring='f1',
-                           n_jobs=-1,
-                           verbose=1)
-
-grid_search.fit(train_df, label.values.ravel())
-
-print('Best score: {}'.format(grid_search.best_score_))
-print('Best parameters: {}'.format(grid_search.best_params_))
+# print('Starting random forest classifier grid search...')
+# clf = RandomForestClassifier()
+#
+# parameter_grid = {
+#     'max_depth': [10, 15, 20, 50, 100],
+#     'max_features': ['auto', 'sqrt', 'log2', None],
+#     'n_estimators': [10, 100, 200, 400],
+#     'criterion': ['gini', 'entropy'],
+#     'class_weight': [{0: 1., 1: 2}, {0: 1., 1: 4}, {0: 1., 1: 8}, 'balanced', None],
+# }
+#
+# cross_validation = StratifiedKFold(n_splits=5)
+#
+# grid_search = GridSearchCV(clf,
+#                            param_grid=parameter_grid,
+#                            cv=cross_validation,
+#                            scoring='f1',
+#                            n_jobs=-1,
+#                            verbose=1)
+#
+# grid_search.fit(train_df, label.values.ravel())
+#
+# print('Best score: {}'.format(grid_search.best_score_))
+# print('Best parameters: {}'.format(grid_search.best_params_))
 
 print('Starting random forest classifier grid search...')
-clf = RandomForestClassifier()
-
-parameter_grid = {
-    'max_depth': [10, 15, 20, 50, 100],
-    'max_features': ['auto', 'sqrt', 'log2', None],
-    'n_estimators': [10, 100, 200, 400],
-    'criterion': ['gini', 'entropy'],
-    'class_weight': [{0: 1., 1: 2}, {0: 1., 1: 4}, {0: 1., 1: 8}, 'balanced', None],
-}
-
-cross_validation = StratifiedKFold(n_splits=5)
-
-grid_search = GridSearchCV(clf,
-                           param_grid=parameter_grid,
-                           cv=cross_validation,
-                           scoring='f1',
-                           n_jobs=-1,
-                           verbose=1)
-
-grid_search.fit(train_df, label.values.ravel())
-
-print('Best score: {}'.format(grid_search.best_score_))
-print('Best parameters: {}'.format(grid_search.best_params_))
-
-print('Starting random forest classifier grid search...')
-clf = MLPClassifier()
+clf = MLPClassifier(verbose=1)
 
 parameter_grid = {
     'activation': ['identity', 'logistic', 'tanh', 'relu'],
