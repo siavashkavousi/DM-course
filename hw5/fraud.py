@@ -132,13 +132,13 @@ X_test = scaler.transform(X_test)
 # print('Best score: {}'.format(grid_search.best_score_))
 # print('Best parameters: {}'.format(grid_search.best_params_))
 
-print('Starting random forest classifier grid search...')
+print('Starting MLP classifier grid search...')
 clf = MLPClassifier(verbose=1)
 
 parameter_grid = {
-    'activation': ['identity', 'logistic', 'tanh', 'relu'],
+    'activation': ['logistic', 'tanh', 'relu'],
     'alpha': [0.0001, 0.0003, 0.001, 0.01],
-    'learning_rate': ['constant', 'invscaling', 'adaptive'],
+    'learning_rate': ['constant', 'adaptive'],
     'max_iter': [200, 500, 1000]
 }
 
@@ -151,7 +151,7 @@ grid_search = GridSearchCV(clf,
                            n_jobs=-1,
                            verbose=1)
 
-grid_search.fit(train_df, label.values.ravel())
+grid_search.fit(X_train, y_train.values.ravel())
 
 print('Best score: {}'.format(grid_search.best_score_))
 print('Best parameters: {}'.format(grid_search.best_params_))
