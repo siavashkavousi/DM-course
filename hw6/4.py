@@ -3,6 +3,7 @@ import itertools
 import networkx as nx
 import numpy as np
 from matplotlib import pyplot as plt
+import community
 
 from helper import girvan_newman
 
@@ -17,7 +18,9 @@ limited = itertools.takewhile(lambda c: len(c) <= k, comp)
 communities = list(limited)[2]
 colors = ['r', 'g', 'b', 'y']
 for index, community in enumerate(communities):
-    print np.array(community)
     nx.draw_networkx_nodes(g, pos, nodelist=community, node_color=colors[index])
     nx.draw_networkx_edges(g, pos)
 plt.show()
+
+# partition = community.best_partition(g)
+# print community.modularity(partition, g)
